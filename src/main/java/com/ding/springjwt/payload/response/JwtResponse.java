@@ -1,4 +1,4 @@
-package com.bezkoder.springjwt.payload.response;
+package com.ding.springjwt.payload.response;
 
 import java.util.List;
 

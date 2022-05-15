@@ -1,4 +1,4 @@
-package com.bezkoder.springjwt.models;
+package com.ding.springjwt.models;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,14 +9,16 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "users", 
-    uniqueConstraints = { 
+@Table(name = "users",
+    uniqueConstraints = {
       @UniqueConstraint(columnNames = "username"),
-      @UniqueConstraint(columnNames = "email") 
+      @UniqueConstraint(columnNames = "email")
     })
 public class User {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+//  @GeneratedValue(strategy = GenerationType.IDENTITY) // TODO: 改成一般的值
+  @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "id_Sequence")
+  @SequenceGenerator(name = "id_Sequence", sequenceName = "ID_SEQ")
   private Long id;
 
   @NotBlank
@@ -33,8 +35,8 @@ public class User {
   private String password;
 
   @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(  name = "user_roles", 
-        joinColumns = @JoinColumn(name = "user_id"), 
+  @JoinTable(  name = "user_roles",
+        joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new HashSet<>();
 
